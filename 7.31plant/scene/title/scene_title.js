@@ -3,6 +3,8 @@ class SceneTitle extends GuaScene {
         super(game)
         var label = GuaLabel.new(game, 'hello')
         this.addElement(label)
+        var center = GuaImage.new(game, 'center')
+        this.addElement(center)
         var b = GuaAnimation.new(game)
         b.x = 200
         b.y = 500

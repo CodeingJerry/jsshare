@@ -1,7 +1,22 @@
+// var loadLevel = function(game, n) {
+//     n = n - 1
+//     var level = levels[n]
+//     var blocks = []
+//     for (var i = 0; i < level.length; i++) {
+//         var p = level[i]
+//         var b = Block(game, p)
+//         blocks.push(b)
+//     }
+//     return blocks
+// }
+
 var loadLevel = function(game, n) {
-    n = n - 1
-    var level = levels[n]
+    var le = 'level' + n
+    var level = JSON.parse(localStorage.getItem(le))
     var blocks = []
+    if (level === null) {
+        return []
+    }
     for (var i = 0; i < level.length; i++) {
         var p = level[i]
         var b = Block(game, p)
@@ -22,7 +37,9 @@ var enableDebugMode = function(game, enable) {
             window.paused = !window.paused
         } else if ('1234567'.includes(k)) {
             // 为了 debug 临时加的载入关卡功能
-            // blocks = loadLevel(game, Number(k))
+            blocks = loadLevel(game, k)
+            game.level = k
+            // log('@@@@@@@@@@@@@@@@@@@ game level, ',game.level)
         }
     })
     // 控制速度
@@ -35,29 +52,11 @@ var enableDebugMode = function(game, enable) {
 
 var __main = function() {
     var images = {
-        bullet: 'img/bullet.png',
-        cloud: 'img/cloud.png',
-        plane: 'img/plane.png',
-        enemy1: 'img/enemy1.png',
-        enemy2: 'img/enemy2.png',
-        enemy3: 'img/enemy3.png',
-        background: 'img/background.png',
-        fire: 'fire.png',
-        // 动画
-        bird0_0: 'img/birds/bird0_0.png',
-        bird0_1: 'img/birds/bird0_1.png',
-        bird0_2: 'img/birds/bird0_2.png',
-        // 多状态动画
-        bird1_0: 'img/blue/bird1_0.png',
-        bird1_1: 'img/blue/bird1_1.png',
-        bird1_2: 'img/blue/bird1_2.png',
-        bird2_0: 'img/red/bird2_0.png',
-        bird2_1: 'img/red/bird2_1.png',
-        bird2_2: 'img/red/bird2_2.png',
-        center: 'img/center.jpg',
+        ball: 'img/ball.png',
+        block: 'img/block.png',
+        paddle: 'img/paddle.png',
     }
     var game = GuaGame.instance(30, images, function(g){
-        // var s = Scene.new(g)
         var s = SceneTitle.new(g)
         g.runWithScene(s)
     })
