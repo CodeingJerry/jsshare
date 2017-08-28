@@ -53,7 +53,7 @@ class GuaParticleSystem {
         this.duration = 10
         this.x = 150
         this.y = 200
-        this.numberOfParticles = 10
+        this.numberOfParticles = 100
         this.particles = []
     }
     draw() {
@@ -88,4 +88,3 @@ class GuaParticleSystem {
         this.particles = this.particles.filter(p => p.life > 0)
     }
 }
-
