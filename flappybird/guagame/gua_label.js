@@ -11,7 +11,9 @@ class GuaLabel {
         return i
     }
     draw() {
-        this.game.context.fillText(this.text, 100, 190)
+        this.game.context.font = '20pt Calibri';
+        this.game.context.fillStyle = 'blue';
+        this.game.context.fillText('score ：' + this.text, 20, 30)
     }
     update() {
 

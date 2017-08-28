@@ -145,7 +145,7 @@ class Enemy extends GuaImage {
         if (this.life) {
             this.game.drawImage(this)
         }
-        if (this.enablefired) {
+        if (this.enablefired && this.life) {
             log('enablefired, ', this.enablefired)
             this.fire()
         }
@@ -202,9 +202,9 @@ class Scene extends GuaScene {
         this.addElement(this.cloud)
         this.addEnemies()
         this.addElement(this.player)
-        var ps = GuaParticleSystem.new(this.game)
-        log('ps, ', ps)
-        this.addElement(ps)
+        // var ps = GuaParticleSystem.new(this.game)
+        // log('ps, ', ps)
+        // this.addElement(ps)
     }
     addEnemies() {
         var es = []

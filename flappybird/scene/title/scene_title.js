@@ -43,6 +43,7 @@ class Pipes {
                 this.resetPipesPosition(p1, p2)
             }
         }
+
     }
     draw() {
         var context = this.game.context
@@ -65,13 +66,18 @@ class Pipes {
 class SceneTitle extends GuaScene {
     constructor(game) {
         super(game)
-        // var label = GuaLabel.new(game, 'hello')
-        // this.addElement(label)
         var bg = GuaImage.new(game, 'bg')
         this.addElement(bg)
         // 加入水管
         var pp = Pipes.new(game)
         this.addElement(pp)
+        this.pp = pp
+        // 添加分数
+        this.score = 0
+        var label = GuaLabel.new(this.game, this.score)
+        this.addElement(label)
+        this.label = label
+
         // 循环移动的地面
         this.grounds = []
         for (var i = 0; i < 22; i++) {
@@ -118,6 +124,7 @@ class SceneTitle extends GuaScene {
     update() {
         this.debug && this.debug()
         super.update()
+
         // 移动地面
         this.skipCount --
         var offset = -5
@@ -128,6 +135,24 @@ class SceneTitle extends GuaScene {
         for (var i = 0; i < 22; i++) {
             var g = this.grounds[i]
             g.x += offset
+        }
+        // 碰撞检测
+        var pipes = this.pp.pipes
+        var bird = this.b
+        for (var i = 0; i < pipes.length / 2; i+=2) {
+            var p1 = pipes[i]
+            var p2 = pipes[i+1]
+            if (bird.x > p1.x && bird.x < p1.x + p1.w) {
+                if (bird.y > p2.y || bird.y < p1.y + p1.h) {
+                    log('碰撞',bird.y, p2.y, p1.y)
+                    var sceneend = SceneEnd.new(this.game)
+                    this.game.replaceScene(sceneend)
+                }
+                else {
+                    this.score += 10
+                    this.label.text = this.score
+                }
+            }
         }
     }
     draw() {
